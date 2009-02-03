@@ -1,0 +1,67 @@
+<job>
+
+<comment>
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// This Software is the proprietary and confidential property of BPM Microsystems,                                    //
+// Any unauthorized use, reproduction, or transfer of this software is prohibited by law.                             //
+// THIS SOURCE CODE CONTAINS TRADE SECRETS OF BPM MICROSYSTEMS, HOUSTON, TEXAS. (713)688-4600. DO NOT DUPLICATE.      //
+//                                                                                                                    //
+// $Header: //sesca/src/Winprog/COMSerializationSDK/rcs/LaunchMeToCreateWebZip.wsf 1.1 2009/02/03 15:00:18 arturoc Exp $
+//                                                                                                                    //
+///////// 120 columns, Tab = Insert 3 Spaces ///////////////////////////////////////////////////////////////////////////
+</comment>
+
+    <script language="VBScript">
+    
+        Public Function Prompt(sPrompt, sTitle)
+            Prompt = InputBox(sPrompt, sTitle)
+        End Function
+        
+    </script>
+    
+    <script language="JScript">
+    
+        //http://translate.google.com/translate?hl=en&sl=ja&u=http://www.bosagami.net/jshelp/index.php%3Fpage%3D%2583T%2583%2593%2583v%2583%258B%2581FZIP%2582%25C5%2588%25B3%258Fk&ei=8oiISa7HJITSMeiM9dQH&sa=X&oi=translate&resnum=3&ct=result&prev=/search%3Fq%3D%2522jscript%2522%2Bzip%26hl%3Den%26client%3Dfirefox-a%26rls%3Dorg.mozilla:en-US:official%26sa%3DG
+        //window.prompt("test");
+
+
+        var sDestFile = "ComSerializationSDK-" +
+                        Prompt("Please input the SDK version number.",
+                               "Version Number") +
+                        ".zip";
+
+        var sSourcePath = ".";
+
+        var oFileSys = WScript.CreateObject("Scripting.FileSystemObject");
+        var oShell = WScript.CreateObject("WScript.Shell");
+
+        var oShellApp = WScript.CreateObject("Shell.Application");
+        var sBaseFolder = oFileSys.GetParentFolderName(WScript.ScriptFullName);
+        oShell.CurrentDirectory = sBaseFolder;
+
+        sDestFile = oFileSys.BuildPath(sBaseFolder, sDestFile);
+        sSourcePath = oFileSys.BuildPath(sBaseFolder, sSourcePath);
+
+        var sZipHead = "PK\05\06";
+        sZipHead += "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00";
+
+        var oZipFile = oFileSys.CreateTextFile(sDestFile, true);
+        oZipFile.Write(sZipHead);
+        oZipFile.Close();
+
+        var oZipFolder = oShellApp.NameSpace(sDestFile);
+        oZipFolder.CopyHere(sSourcePath);
+
+        WScript.Sleep(2000);
+        
+        var oRoot = oZipFolder.ParseName("ComSerializationSDK").GetFolder;
+        var oItem = oRoot.ParseName("ComSerializationSDK.pj");
+        oShell.PopUp("The script is about to delete the .pj and this .wsf file from the zipped folder, for which " +
+                     "you will receive two confirmation dialogs.  Please click \"Yes\" in the confirmation dialogs.");
+        oItem.InvokeVerb("&Delete");
+        oItem = oRoot.ParseName(WScript.ScriptName);
+        oItem.InvokeVerb("&Delete");
+
+    </script>
+    
+</job>
