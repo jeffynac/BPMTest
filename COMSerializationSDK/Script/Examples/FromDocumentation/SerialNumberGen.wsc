@@ -1,0 +1,35 @@
+<component>
+
+<comment>
+  
+  Copyright 2009 BPM Microsystems
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/SerialNumberGen.wsc 1.1 2009/02/03 15:00:28 arturoc Exp $
+  
+</comment>
+
+<public><method name="GetSerialData"></method></public>
+<script language="JScript">
+
+var dictionary = new ActiveXObject("Scripting.Dictionary");
+function GetSerialData(sCurrentNumber)
+{ 
+   var lCurrentNumber = parseInt(sCurrentNumber, 16);
+   dictionary.Item(0) = (lCurrentNumber >> 24) & 0xFF;
+   dictionary.Item(1) = (lCurrentNumber >> 16) & 0xFF;
+   dictionary.Item(2) = (lCurrentNumber >>  8) & 0xFF;
+   dictionary.Item(3) =  lCurrentNumber        & 0xFF;
+   dictionary.Item("NextHandle") = (lCurrentNumber + 1).toString(16);
+   return dictionary;
+}
+
+</script>
+</component>
