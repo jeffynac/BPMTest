@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<component>
+
+<comment>
+  Copyright 2009 BPM Microsystems
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.wsc 1.1 2009/02/03 15:00:41 arturoc Exp $
+</comment>
+
+<registration
+	description="Ess Scripting Library"
+	progid="ComSerSdk.EssScriptLib"
+	version="1.00"
+/>
+
+<public>
+  <method name="LockVector" />
+  <method name="GetDictionary" />
+  <method name="SetNextHandle" />
+  <method name="SetVector" />
+  <method name="ThrowError" />
+</public>
+
+<script language="VBScript" src="EssLib.vbs">
+</script>
+
+</component>
