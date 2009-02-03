@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<component>
+
+<comment>
+  Copyright 2009 BPM Microsystems
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+  
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/rcs/HexLineReaderEss.wsc 1.1 2009/02/03 15:00:37 arturoc Exp $
+
+   This source code is an example of an implementation of an External Serialization Server (ESS), which is a COM
+   object that generates unique data pattern modifications for a device in a job session using the BPM Microsystems
+   BPWin software to operate a BPM Microsystems device programming system, where the "COM Serialization" feature has
+   been enabled for the job session.
+
+   This implementation of an ESS utilizes the script library included in the BPM Microsystems COM
+   Serialization Software Development Kit (SDK).  The SDK is freely available for download from the BPM Microsystems
+   website (http://www.bpmmicro.com), and includes documentation, examples, and code libraries for several programming
+   languages that can be used to implement COM objects.
+
+   This is an example of an ESS implemented as a Windows Script Component.  The function of this example is to
+   read the data pattern modifications for a device in a job session from an input file.  The input file is expected
+   to be in a specific format: it should consist of a newline-delimited list of binary data, with each byte formatted
+   in 2-digit ASCII-hex, with each line prefixed with a single space character (20h).  Each line should contain no
+   more and no less than 16 ASCII-hex characters (enough to represent 8 bytes).  Each line represents the 
+   entire set of data pattern modifications for a device.  When a line of data has successfully been used for a device,
+   the input file is updated to replace the single-space prefix for its line with an astrisk character ('*').  Then
+   in a subsequent job session, the logic here is structured to begin at the first line that has not been marked with
+   that character.  This scheme ensures that data from the input file is not re-used.
+
+   The data in a line from the file will be programmed into the data pattern for a device beginning at address 10h,
+   and will be spanned accross 16 bytes of the data pattern.  Each byte from the data line will be applied to every
+   other byte in that span, with the alternate bytes set to FFh.
+
+   To configure BPWin to utilize this .wsc file for a job session where COM Serialization has been enabled, consult
+   the COM Serialization topics in BPWin help, and specify this in the "Program" field of the serialization dialog:
+
+      EssHost.exe -getobj"script:[path]"
+
+   And replace the [path] portion with the path to the .wsc file.  For instance, if the path of this .wsc file is
+
+      c:\EssScripts\HexLineReaderEss.wsc
+
+   Then the entire contents of the "Program" field of the serialization dialog should look like this:
+
+      EssHost.exe -getobj"script:c:\EssScripts\HexLineReaderEss.wsc"
+
+</comment>
+
+<public>
+  <method name="GetSerialData"></method>
+  <method name="OnBeginJob"></method>
+</public>
+
+<script language="VBScript" src="..\Library\EssLib.vbs" />
+
+<script language="JScript">
+<![CDATA[
+
+var m_sNumsStreamPath;
+var m_oNumsStream;
+
+function OnBeginJob(sLastHandle, lQuantity)
+{
+   // Unfortunately, we must use absolute paths here, since there is no way of ensuring that the
+   // "current directory" of this currently-executing script code is the same as the path of the
+   // .wsc file that you are looking at right now.
+   //
+   //  TODO: Correct this path for your system.
+   // 
+   m_sNumsStreamPath = "C:\\COMSerializationSDK\\Script\\Examples\\HexLines.txt";
+   
+   m_oNumsStream = PrepareStream();
+}
+
+function GetSerialData(sCurrentNumber)
+{
+   var lPosToMark = PrepareStreamLine(m_oNumsStream);
+   
+   SetStreamLineToVector(m_oNumsStream, 0x10, 8);
+   
+   FinalizeLine(m_oNumsStream, lPosToMark);
+
+   return GetDictionary();
+}
+
+function FinalizeLine(oStream, lPosToMark)
+{
+   oStream.Position = lPosToMark;
+   oStream.WriteText("*");
+   oStream.SaveToFile(m_sNumsStreamPath,
+                      2//SaveOptions=adSaveCreateOverWrite
+                            );
+   oStream.Position = lPosToMark;
+   oStream.SkipLine();
+}
+
+function PrepareStreamLine(oStream)
+{
+   var lPosToMark = m_oNumsStream.Position;
+   var sTextRead = m_oNumsStream.ReadText(1);
+   if(sTextRead != ' ')
+   {
+      throw Error("The input data file \"" + m_sNumsStreamPath + "\" is not formatted correctly."
+                  + " \"" + sTextRead + "\" was read but the script was expecting that to be a "
+                  + "single space.");
+   }
+   
+   return lPosToMark;
+}
+
+function SetStreamLineToVector(oStream, lAddr, lSize)
+{
+   var lNumBytes = lSize * 2;
+   var oVec = LockVector(lAddr, lNumBytes);
+   
+   for(var i = 0; i < lNumBytes; i+=2)
+   {
+      oVec.SetAtIndex(i, 0xFF);
+      var sWasRead = m_oNumsStream.ReadText(2);
+      oVec.SetAtIndex(i + 1, parseInt(sWasRead, 16));
+   }
+   oVec.Unlock();
+}
+
+function SetReadPosToFirstAvailableLine(oAdoStream)
+{
+   while(!oAdoStream.EOS)
+   {
+      var sFirst = oAdoStream.ReadText(1);
+      if(sFirst != "*" && sFirst == ' ')
+      {
+         oAdoStream.Position = oAdoStream.Position - 1;
+         return oAdoStream;
+      }
+      oAdoStream.SkipLine();
+   }
+   
+   throw Error("All numbers in " + m_sNumsStreamPath + " have been used.");
+}
+
+function PrepareStream()
+{
+   var oAdoStream = new ActiveXObject("ADODB.Stream");
+   oAdoStream.Charset = "ascii";
+   oAdoStream.Open();
+   try
+   {
+      oAdoStream.LoadFromFile(m_sNumsStreamPath);
+   }
+   catch(oError)
+   {
+      if(oError.description == "File could not be opened.")
+      {
+         throw Error("The input data file at path \"" + m_sNumsStreamPath + "\" could not be opened." + 
+                     " You may need to have the code in the .wsc file modified to correct that path.");
+      }
+   }
+   
+   
+   return SetReadPosToFirstAvailableLine(oAdoStream);   
+}
+
+
+
+]]>
+</script>
+
+</component>
+
