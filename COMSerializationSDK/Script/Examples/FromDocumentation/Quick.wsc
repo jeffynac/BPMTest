@@ -1,0 +1,43 @@
+<component>
+<comment>
+  Copyright 2009 BPM Microsystems
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/Quick.wsc 1.1 2009/02/03 15:00:27 arturoc Exp $
+
+  To configure BPWin to utilize this .wsc file for a job session where COM Serialization has been enabled, consult
+  the COM Serialization topics in BPWin help, and specify this in the "Program" field of the serialization dialog:
+
+     EssHost.exe -getobj"script:[path]"
+
+  And replace the [path] portion with the path of the .wsc file.  For instance, if the path of this .wsc file is
+
+     c:\EssScripts\Quick.wsc
+
+  Then the entire contents of the "Program" field of the serialization dialog should look like this:
+
+     EssHost.exe -getobj"script:c:\EssScripts\Quick.wsc"
+
+</comment>
+
+<public><method name="GetSerialData"></method></public>
+<script language="JScript">
+
+var dictionary = new ActiveXObject("Scripting.Dictionary");
+var number = 0;
+function GetSerialData(sCurrentNumber)
+{ 
+    dictionary.Item(0) = number; //1
+    number+=2; //2
+    return dictionary;
+}
+
+</script>
+</component>
