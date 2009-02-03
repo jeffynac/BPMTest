@@ -1,6 +1,19 @@
-//************************************************************************************************
-// THIS SOURCE CODE IS PROVIDED AS-IS WITH NO WARRANTY.
-//************************************************************************************************
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright 2009 BPM Microsystems
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+// SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+// FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+//                                                                                                                    //
+// $Header: //sesca/src/Winprog/COMSerializationSDK/EssHost/rcs/EssHost.cpp 1.2 2009/02/03 16:21:42 arturoc Exp $
+//                                                                                                                    //
+///////// 120 columns, Tab = Insert 3 Spaces ///////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // External Serialization Server (ESS) Host
 // ----------------------------------------
 // This is the source code for the EssHost.exe executable distributed with BPM Microsystem's BPWin software.
