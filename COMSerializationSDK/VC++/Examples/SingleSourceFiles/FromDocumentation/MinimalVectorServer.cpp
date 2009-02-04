@@ -9,7 +9,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 //                                                                                                                    //
-// $Header: //sesca/src/Winprog/COMSerializationSDK/VC++/Examples/SingleSourceFiles/FromDocumentation/rcs/MinimalVectorServer.cpp 1.2 2009/02/03 16:23:00 arturoc Exp $
+// $Header: //sesca/src/Winprog/COMSerializationSDK/VC++/Examples/SingleSourceFiles/FromDocumentation/rcs/MinimalVectorServer.cpp 1.3 2009/02/04 11:20:52 arturoc Exp $
 //                                                                                                                    //
 ///////// 120 columns, Tab = Insert 3 Spaces ///////////////////////////////////////////////////////////////////////////
 
@@ -18,36 +18,16 @@
 
 class CVectorServer : public ComSerSdk::CVectorServerBase
 {
-public:
-   CVectorServer():
-      m_uNum00(0),
-      m_uNumAA(0xFFFFFFFF)
-   {}
-
-private:
-
-   unsigned m_uNum00;
-   unsigned m_uNumAA;
-
-   void SetNum(ComSerSdk::CLockedVector & oVec,
-               void * pvData)
-   {
-      memcpy(oVec.GetRawPtr(), pvData, oVec.Size());
-   }
-
    void SetVectors(const std::string &,
                          std::string &,
                    ComSerSdk::CVectorSetter & oVectorSetter)
    {
-      SetNum(oVectorSetter.Lock(0x00, sizeof m_uNum00), &m_uNum00);
-      SetNum(oVectorSetter.Lock(0xAA, sizeof m_uNumAA), &m_uNumAA);
-      m_uNum00++;
-      m_uNumAA--;
    }
 };
 
 class CEssApp : public ComSerSdk::CApplicationBase
 {
+public:
    ComSerSdk::CServerPtr CreateServer()
    {
       return ComSerSdk::CServerPtr(new CVectorServer());
@@ -55,3 +35,4 @@ class CEssApp : public ComSerSdk::CApplicationBase
 };
 
 CEssApp g_oEssApp;
+
