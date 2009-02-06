@@ -6,7 +6,7 @@
 // Any unauthorized use, reproduction, or transfer of this software is prohibited by law.                             //
 // THIS SOURCE CODE CONTAINS TRADE SECRETS OF BPM MICROSYSTEMS, HOUSTON, TEXAS. (713)688-4600. DO NOT DUPLICATE.      //
 //                                                                                                                    //
-// $Header: //sesca/src/Winprog/COMSerializationSDK/rcs/LaunchMeToCreateWebZip.wsf 1.3 2009/02/04 11:58:28 arturoc Exp $
+// $Header: //sesca/src/Winprog/COMSerializationSDK/rcs/LaunchMeToCreateWebZip.wsf 1.4 2009/02/06 13:41:19 arturoc Exp $
 //                                                                                                                    //
 ///////// 120 columns, Tab = Insert 3 Spaces ///////////////////////////////////////////////////////////////////////////
 </comment>
@@ -44,14 +44,19 @@
       }
       
       oFileSys.CreateFolder(sTempFolderPath);
+      
+      var sTempFolderRoot = oFileSys.BuildPath(sTempFolderPath, sLibName);
+      
+      oFileSys.CreateFolder(sTempFolderRoot);
+      
       var oShellApp = WScript.CreateObject("Shell.Application");
-      var oTempShellFolder = oShellApp.NameSpace(sTempFolderPath);
+      var oTempShellFolder = oShellApp.NameSpace(sTempFolderRoot);
       
       oTempShellFolder.CopyHere(oShell.CurrentDirectory + "\\*");
       
-      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderPath, sLibName + ".pj")  , true /*force*/);
-      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderPath, sLibName + ".use") , true /*force*/);
-      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderPath, WScript.ScriptName), true /*force*/);
+      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderRoot, sLibName + ".pj")  , true /*force*/);
+      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderRoot, sLibName + ".use") , true /*force*/);
+      oFileSys.DeleteFile(oFileSys.BuildPath(sTempFolderRoot, WScript.ScriptName), true /*force*/);
                                                                          
       var oZipFile = oFileSys.CreateTextFile(sDestPath, true);
       oZipFile.Write("PK\05\06\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00");
