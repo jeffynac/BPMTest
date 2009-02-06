@@ -12,7 +12,7 @@
   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   DEALINGS IN THE SOFTWARE.
 
-  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/VBScriptThrowException.wsc 1.1 2009/02/03 15:00:36 arturoc Exp $
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/VBScriptThrowException.wsc 1.2 2009/02/06 12:56:47 arturoc Exp $
 
 </comment>
 
@@ -27,7 +27,7 @@
 Public Function GetSerialData(sCurrentNumber)
    If CLng("&H" & sCurrentNumber) >= &HFFFFEEEE Then
       Err.Clear
-      Err.Raise vbObjErr + &H221, "MyEss", "Serial number limit exceeded."
+      Err.Raise vbObjErr + &H300, "MyEss", "Serial number limit exceeded."
    End If
    SetVector &H10, Array(&HAB, &HCD, &HEF, &H12), 4
    Set GetSerialData = GetDictionary
