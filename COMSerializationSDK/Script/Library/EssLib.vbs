@@ -8,7 +8,7 @@
 '  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 '  DEALINGS IN THE SOFTWARE.
 '  
-'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.2 2009/02/18 16:08:00 arturoc Exp $
+'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.3 2009/06/05 11:47:06 arturoc Exp $
 
 ' The collection required by BPWin that specifies the data pattern modifications.
 '
@@ -125,7 +125,7 @@ End Sub
 
 ' Helper for raising an exception.
 '
-Private Sub RaiseException(sDescription, lNumber)
+Private Sub RaiseException(lNumber, sDescription)
    Err.Clear
    Err.Raise lNumber, "ESS .wsc file", sDescription
 End Sub
@@ -141,13 +141,14 @@ End Sub
 ' Throws an exception configured to tell BPWin to fail the device operation instead of aborting the job session.
 ' The text in sDescription will be added to the serialization log file.
 '
-Public Sub FailDeviceOperation(sDescription)
+Public Sub ThrowFailDeviceOperation(sDescription)
    RaiseException &H80040220, sDescription
 End Sub
 
 ' Set the return value of this function as the return value of the GetSerialData() method.  Returns the dictionary
 ' object BPWin requires the GetSerialData() method to return.
-' Also, this function removes the "LogText" entry from the dictionary object.
+' Also, this function removes the "LogText" entry from the dictionary object so that it does not remain stale between
+' invokations of the user's GetSerialData() method.
 '
 Public Function GetDictionary()
    If m_oDictionary.Exists(k_sLogTextKey) Then
@@ -156,10 +157,10 @@ Public Function GetDictionary()
    Set GetDictionary = m_oDictionary
 End Function
 
-' Equivalent to GetDictionary(), but additionally adds an entry to the dictionary object that BPWin will write to the
-' serialization log file.
+' Equivalent to GetDictionary(), except additionally adds a text entry to the dictionary object that BPWin will write to
+' the serialization log file.
 '
-Public Sub GetDictionaryAndAddLogEntry(sLogEntryContent)
+Public Function GetDictionaryAndAddLogEntry(sLogEntryContent)
    m_oDictionary.Item(k_sLogTextKey) = sLogEntryContent
-   Set GetDictionaryAndLog = m_oDictionary
-end sub
+   Set GetDictionaryAndAddLogEntry = m_oDictionary
+end Function
