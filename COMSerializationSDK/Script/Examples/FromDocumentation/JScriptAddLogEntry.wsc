@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<component>
+
+<comment>
+  Copyright 2009 BPM Microsystems
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/JScriptAddLogEntry.wsc 1.1 2009/06/08 08:39:41 arturoc Exp $
+
+</comment>
+
+<public>
+  <method name="GetSerialData"></method>
+</public>
+
+<script language="VBScript" src="..\..\Library\EssLib.vbs" />
+
+<script language="JScript">
+<![CDATA[
+
+var lNumCalls = 0;
+
+function GetSerialData(sCurrentHandle)
+{
+   lNumCalls++;
+   
+   SetVector(0x10, Array(0xAB, 0xCD, 0xEF, 0x12), 4);
+   
+   var sLogEntry = "GetSerialData called " + lNumCalls + " times. ";
+   
+   return (lNumCalls % 5 == 0) ?
+          GetDictionaryAndAddLogEntry(sLogEntry) :
+          GetDictionary();
+}
+
+]]>
+</script>
+
+</component>
