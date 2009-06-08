@@ -8,7 +8,7 @@
 '  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 '  DEALINGS IN THE SOFTWARE.
 '  
-'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.3 2009/06/05 11:47:06 arturoc Exp $
+'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.4 2009/06/08 12:48:11 arturoc Exp $
 
 ' The collection required by BPWin that specifies the data pattern modifications.
 '
@@ -86,7 +86,7 @@ Class Vector
    Public Sub CopyFromArray(oJscriptOrVbScriptArray)
       Dim lIndex
       lIndex = 0
-      For Each oElem in oJscriptArray
+      For Each oElem in oJscriptOrVbScriptArray
          SetAtIndex lIndex, oElem
          lIndex = lIndex + 1
       Next
