@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <component>
-
+  
 <comment>
   Copyright 2009 BPM Microsystems
 
@@ -12,7 +12,7 @@
   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   DEALINGS IN THE SOFTWARE.
 
-  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/ObjectOptionJScript.wsc 1.1 2009/02/03 15:00:25 arturoc Exp $
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/ObjectOptionJScript.wsc 1.2 2009/06/08 12:47:13 arturoc Exp $
 
 </comment>
 
