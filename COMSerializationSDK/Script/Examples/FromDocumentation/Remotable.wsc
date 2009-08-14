@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<component>
+
+<comment>
+  Copyright 2009 BPM Microsystems
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+  SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+  FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/Remotable.wsc 1.1 2009/08/14 12:29:57 arturoc Exp $
+
+</comment>
+
+<registration classid="{16BB5B43-B0A0-413f-8380-16ABCA6A334E}"
+   remotable="true" />
+<public><method name="GetSerialData" /></public>
+<script language="JScript">
+
+var dictionary = new ActiveXObject("Scripting.Dictionary");
+var number = 0;
+function GetSerialData(sCurrentNumber)
+{
+   dictionary.Item(
+                   0 //1
+                   ) = number;
+   number += 2; //2
+   return dictionary;
+}
+
+</script>
+</component>
