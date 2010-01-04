@@ -12,7 +12,7 @@
   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   DEALINGS IN THE SOFTWARE.
 
-  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/VBScriptSkeleton.wsc 1.2 2009/02/06 12:56:22 arturoc Exp $
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/FromDocumentation/rcs/VBScriptSkeleton.wsc 1.3 2010/01/04 09:03:42 arturoc Exp $
 
 </comment>
 
@@ -20,6 +20,7 @@
   <method name="GetSerialData"></method>
   <method name="OnBeginJob"></method>
   <method name="OnResult"></method>
+  <method name="SetInitializationData"></method>
 </public>
 
 <script language="VBScript">
@@ -32,6 +33,9 @@ Public Sub OnBeginJob(sLastHandle, lQuantity)
 End Sub
 
 Public Sub OnResult(sHandle, bResult, lSite, lSocket)
+End Sub
+
+Public Sub SetInitializationData(sInitializationData)
 End Sub
 
 
