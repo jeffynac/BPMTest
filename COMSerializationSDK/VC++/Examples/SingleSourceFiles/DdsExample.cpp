@@ -10,7 +10,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 //                                                                                                                    //
-// $Header: //sesca/src/Winprog/COMSerializationSDK/VC++/Examples/SingleSourceFiles/rcs/DdsExample.cpp 1.1 2011/07/18 09:02:50 arturoc Exp $
+// $Header: //sesca/src/Winprog/COMSerializationSDK/VC++/Examples/SingleSourceFiles/rcs/DdsExample.cpp 1.2 2011/07/21 11:26:54 arturoc Exp $
 //                                                                                                                    //
 ///////// 120 columns, Tab = Insert 3 Spaces ///////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,12 @@ using namespace std;
 
 class CDdsEss : public ComSerSdk::CSerialServerBase
 {
-   void Test(const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
+   void Test(const std::string & sHandle,
+             const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
                    ComSerSdk::COutBoundByteArray & oByteArrayToSite)
    {
-      ATLTRACE(__FUNCTION__": FromSiteSize = %d FirstFewBytesFromSite = %x %x %x\n",
+      ATLTRACE(__FUNCTION__": sHandle = %s FromSiteSize = %d FirstFewBytesFromSite = %x %x %x\n",
+                              sHandle.c_str(),
                               oByteArrayFromSite.Size(),
                               oByteArrayFromSite.GetAtIndex(0) + 0,
                               oByteArrayFromSite.GetAtIndex(1) + 0,
@@ -79,13 +81,15 @@ class CDdsEss : public ComSerSdk::CSerialServerBase
       oByteArrayToSite.SetAtIndex(sMethName.GetLength(), 0);
    }
 
-   void TheSecondMethod(const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
+   void TheSecondMethod(const std::string & sHandle,
+                        const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
                               ComSerSdk::COutBoundByteArray & oByteArrayToSite)
    {
       CheckMethod("TheSecondMethod", oByteArrayFromSite, oByteArrayToSite);
    }
 
-   void MethodNumberThree(const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
+   void MethodNumberThree(const std::string & sHandle,
+                          const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
                                 ComSerSdk::COutBoundByteArray & oByteArrayToSite)
    {
       CheckMethod("MethodNumberThree", oByteArrayFromSite, oByteArrayToSite);
