@@ -8,7 +8,7 @@
 '  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 '  DEALINGS IN THE SOFTWARE.
 '  
-'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.4 2009/06/08 12:48:11 arturoc Exp $
+'  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Library/rcs/EssLib.vbs 1.5 2012/06/05 13:17:26 arturoc Exp $
 
 ' The collection required by BPWin that specifies the data pattern modifications.
 '
@@ -143,6 +143,15 @@ End Sub
 '
 Public Sub ThrowFailDeviceOperation(sDescription)
    RaiseException &H80040220, sDescription
+End Sub
+
+' IMPORTANT: For the job session to terminate gracefully, this can only be called from the GetSerialData() method.
+'
+' Throws an exception configured to tell BPWin that the last serial number has been exceeded.
+' The text in sDescription will be added to the serialization log file.
+'
+Public Sub ThrowLastSnExceeded(sDescription)
+   RaiseException &H80040221, sDescription
 End Sub
 
 ' Set the return value of this function as the return value of the GetSerialData() method.  Returns the dictionary
