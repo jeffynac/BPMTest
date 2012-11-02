@@ -12,7 +12,7 @@
   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   DEALINGS IN THE SOFTWARE.
   
-  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/rcs/HexLineReaderEss.wsc 1.2 2009/06/05 11:45:47 arturoc Exp $
+  $Header: //sesca/src/Winprog/COMSerializationSDK/Script/Examples/rcs/HexLineReaderEss.wsc 1.3 2012/11/02 11:54:51 arturoc Exp $
 
    This source code is an example of an implementation of an External Serialization Server (ESS), which is a COM
    object that generates unique data pattern modifications for a device in a job session using the BPM Microsystems
@@ -150,6 +150,7 @@ function PrepareStream()
    var oAdoStream = new ActiveXObject("ADODB.Stream");
    oAdoStream.Charset = "ascii";
    oAdoStream.Open();
+   var bThrowFileAccessError = false;
    try
    {
       oAdoStream.LoadFromFile(m_sNumsStreamPath);
@@ -158,13 +159,18 @@ function PrepareStream()
    {
       if(oError.description == "File could not be opened.")
       {
-         throw Error("The input data file at path \"" + m_sNumsStreamPath + "\" could not be opened." + 
-                     " You may need to have the code in the .wsc file modified to correct that path.");
+         bThrowFileAccessError = true;
       }
       else
       {
          throw oError;
       }
+   }
+   
+   if(bThrowFileAccessError)
+   {
+     throw Error("The input data file at path \"" + m_sNumsStreamPath + "\" could not be opened." + 
+                     " You may need to have the code in the .wsc file modified to correct that path.");
    }
    
    
