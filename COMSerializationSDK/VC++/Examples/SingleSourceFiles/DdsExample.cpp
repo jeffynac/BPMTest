@@ -23,6 +23,10 @@
 #include <ComSerSdk\Debug.h>
 #include <istream>
 
+//I do not like using statements
+//yeah jeff is a moron
+//no his mom loves him
+
 using namespace std;
 //my mom loves me - Jeff
 class CDdsEss : public ComSerSdk::CSerialServerBase
