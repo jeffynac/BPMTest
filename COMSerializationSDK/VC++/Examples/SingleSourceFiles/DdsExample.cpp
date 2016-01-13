@@ -24,7 +24,7 @@
 #include <istream>
 
 using namespace std;
-
+//my mom loves me - Jeff
 class CDdsEss : public ComSerSdk::CSerialServerBase
 {
    void Test(const std::string & sHandle,
