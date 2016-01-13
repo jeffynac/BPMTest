@@ -72,7 +72,7 @@ class CDdsEss : public ComSerSdk::CSerialServerBase
    {
       return S_OK;
    }
-
+ljkhasljaskjldasldjlsak
    void CheckMethod(const CString sMethName,
                     const ComSerSdk::CInBoundByteArray  & oByteArrayFromSite,
                           ComSerSdk::COutBoundByteArray & oByteArrayToSite)
