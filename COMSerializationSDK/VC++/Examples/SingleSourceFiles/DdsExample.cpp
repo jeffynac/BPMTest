@@ -24,6 +24,7 @@
 #include <istream>
 
 //I do not like using statements
+//yeah jeff is a moron
 using namespace std;
 
 class CDdsEss : public ComSerSdk::CSerialServerBase
