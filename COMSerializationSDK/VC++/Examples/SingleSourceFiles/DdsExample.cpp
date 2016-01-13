@@ -29,6 +29,7 @@
 
 123456
 987654
+lkjdfglkjdflkgjdflkgjdflkgjdlfkjgd
 using namespace std;
 //my mom loves me - Jeff
 class CDdsEss : public ComSerSdk::CSerialServerBase

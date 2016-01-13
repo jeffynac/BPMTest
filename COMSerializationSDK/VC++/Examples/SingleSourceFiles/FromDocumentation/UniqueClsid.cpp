@@ -20,8 +20,7 @@
 
 class CMinimalVectorServer :
    public ComSerSdk::CVectorServerBase
-{
-   void SetVectors(const std::string &,
+{ghnfghfghfghfggfhf
                          std::string &,
                    ComSerSdk::CVectorSetter & oVectorSetter)
    {

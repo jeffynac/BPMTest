@@ -20,7 +20,7 @@ class CVectorServer : public ComSerSdk::CVectorServerBase
 {
 public:
    CVectorServer():
-      m_uNum00(0),
+      m_uNum00(0),dgffhgfhfghgfhfghgf
       m_uNumAA(0xFFFFFFFF)
    {}
 
