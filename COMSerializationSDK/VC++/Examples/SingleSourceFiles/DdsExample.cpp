@@ -23,6 +23,7 @@
 #include <ComSerSdk\Debug.h>
 #include <istream>
 
+//I do not like using statements
 using namespace std;
 
 class CDdsEss : public ComSerSdk::CSerialServerBase
