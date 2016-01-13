@@ -27,6 +27,7 @@
 //yeah jeff is a moron
 //no his mom loves him
 
+123456
 using namespace std;
 //my mom loves me - Jeff
 class CDdsEss : public ComSerSdk::CSerialServerBase
